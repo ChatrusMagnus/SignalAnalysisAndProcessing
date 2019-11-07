@@ -21,16 +21,10 @@ for j = 0:2:4
         tmpEne(k,:) = w(q);
    end
     finalEne = ones(1,NOU)* tmpEne ;
-        plot(q,finalEne);
-        grid on;
-        axis([0 7.5 -1 1]);
-        hold on;
+        
     ene = ene + trapz(q,finalEne.^2);
 end
-plot(q,test_signal1(q));
-        grid on;
-        axis([0 7.5 -1 1]);
-        hold on;
+
 
 
 eneOr = integral(@(x) (test_signal1(x)').^2,t_start,6);
