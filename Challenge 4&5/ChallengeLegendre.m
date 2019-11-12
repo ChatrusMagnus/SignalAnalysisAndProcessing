@@ -3,10 +3,12 @@ load("test_signal1");
 load("test_signal2");
 NOU = 10;
 ene = 0;
-res = 1000;
+res = 100;
 a = 4.^1;
 COE = zeros(1,NOU);
 step = ((1./a));
+lop = ((1./a)*2);
+max = 7/lop;
 result = zeros(1,res.*(7./(step.*2)));
 
 tic
@@ -16,7 +18,8 @@ parfor i = 1:1:NOU
 end
 toc
 tic
-for j = 0:((1./a)*2):7
+for i = 0:max
+    j = i*lop;
     disp(j);
     q = linspace(j,j+(step.*2),res);
     tmpEne = zeros(NOU,res);
@@ -31,21 +34,16 @@ for j = 0:((1./a)*2):7
     ene = ene + trapz(q,finalEne.^2);
     
     
+    
 end
 
 
-
-
-
-
-
-
-sl =linspace(0,7,size(result,2));
+% =linspace(0,7,size(result,2));
 
 eneOr = integral(@(x) (test_signal1(x)').^2,t_start,7);
-plot(sl,test_signal1(sl));
-hold on;
-plot(sl,result);
-hold on;
+%plot(sl,test_signal1(sl));
+%hold on;
+%plot(sl,result);
+%hold on;
 disp((eneOr-ene).*100);
 toc
