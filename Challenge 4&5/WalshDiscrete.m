@@ -4,24 +4,20 @@ load("test_signal2");
 tic;
 t_end = 7.5;
 tic 
-freq = 1000;
-resFirst = 2^13;
+freq = 10000;
+k = 13
+resFirst = 2^k;
 CoefSaving = 1;
-basis = linspace(t_start,t_end,resFirst);
-x = test_signal1(basis);
-U = (1./sqrt(resFirst)).*hadamard(resFirst);
-c = U'*x;
-c(1,freq*t_end : 2^10) = 0;
-y = U*c;
-
-step = 0.5;
-for i = t_start:step:t_end-0.5
+U = (1./sqrt(resFirst)).*walsh(resFirst);
+step = 0.25;
+for i = t_start:step:t_end-step
     basis = linspace(i,i+step,resFirst);
-    x = test_signal1(basis);
-    U = (1./sqrt(resFirst)).*hadamard(resFirst);
+    x = test_signal2(basis);
     c = U'*x;
     c(resFirst*CoefSaving:resFirst,1) = 0;
     y = U*c;
+    plot(basis,c,'d');
+    hold on;
     if i == t_start
         result = y;
     else
@@ -31,14 +27,19 @@ for i = t_start:step:t_end-0.5
 end
 
 j = linspace(t_start,t_end,length(result));
-length(y);
-plot(j,test_signal1(j)','b');
+figure
+plot(j,test_signal2(j)','b');
 hold on;
 plot(j,result,'r');
 hold on;
+testOri = linspace(t_start,t_end,length(result));
 
 toc;
+
+
+sound(test_signal2(testOri),length(result)./7.5);
+pause(10);
 sound(result,length(result)./7.5);
-ene = trapz(result.^2)
-eneOr = trapz(test_signal1(j)'.^2)
+ene = trapz(j,result.^2);
+eneOr = trapz(j,test_signal2(j)'.^2)
 disp((eneOr-ene)./eneOr.*100);

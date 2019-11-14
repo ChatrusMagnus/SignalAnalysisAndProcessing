@@ -37,13 +37,12 @@ for i = 0:max
     
 end
 
-
-% =linspace(0,7,size(result,2));
-
+length(result)
+sl =linspace(0,7,length(result));
 eneOr = integral(@(x) (test_signal1(x)').^2,t_start,7);
-%plot(sl,test_signal1(sl));
-%hold on;
-%plot(sl,result);
-%hold on;
+plot(sl,test_signal1(sl));
+hold on;
+plot(sl,result);
+hold on;
 disp((eneOr-ene).*100);
 toc

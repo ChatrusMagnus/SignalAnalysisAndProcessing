@@ -1,8 +1,12 @@
-NOU = 5;
-COE = zeros(1,NOU);
-q = linspace(-0.25,0.25,1000);
-for i = 1:1:NOU
-    f = @(x) legendreP(i-1,x.*4);
-    plot(q,f(q));
-    hold on;
-end
+clear;
+n = 1:20;
+t = zeros(1,20);
+t(10) = 0.185407;
+t(11) = 0.250392;
+t(12) = 0.696086;
+t(13) = 2.504020;
+t(14) = 8.690001;
+t(15) = 81.534259;
+plot(n,t,'dr');
+hold on
+walsh(4)
